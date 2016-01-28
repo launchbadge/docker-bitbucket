@@ -19,8 +19,8 @@ RUN apt-add-repository ppa:webupd8team/java -y && \
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
-ENV RUN_USER            daemon
-ENV RUN_GROUP           daemon
+ENV RUN_USER            root
+ENV RUN_GROUP           root
 
 # https://confluence.atlassian.com/display/BitbucketServer/Bitbucket+Server+home+directory
 ENV BITBUCKET_HOME          /data
@@ -44,8 +44,6 @@ RUN mkdir -p                             ${BITBUCKET_INSTALL_DIR} \
     && chmod -R 700                      ${BITBUCKET_INSTALL_DIR}/work               \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${BITBUCKET_INSTALL_DIR}/                   \
     && ln --symbolic                     "/usr/lib/x86_64-linux-gnu/libtcnative-1.so" "${BITBUCKET_INSTALL_DIR}/lib/native/libtcnative-1.so"
-
-USER ${RUN_USER}:${RUN_GROUP}
 
 VOLUME ["${BITBUCKET_HOME}"]
 
