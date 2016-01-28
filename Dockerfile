@@ -31,6 +31,10 @@ ENV BITBUCKET_INSTALL_DIR   /srv
 ENV BITBUCKET_VERSION 4.3.2
 ENV DOWNLOAD_URL https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz
 
+RUN mkdir -p ${BITBUCKET_HOME} \
+    && chmod -R 700 ${BITBUCKET_HOME} \
+    && chown -R ${RUN_USER}:${RUN_GROUP} ${BITBUCKET_HOME}
+
 RUN mkdir -p                             ${BITBUCKET_INSTALL_DIR} \
     && curl -L --silent                  ${DOWNLOAD_URL} | tar -xz --strip=1 -C "$BITBUCKET_INSTALL_DIR" \
     && mkdir -p                          ${BITBUCKET_INSTALL_DIR}/conf/Catalina      \
